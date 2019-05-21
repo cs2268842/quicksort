@@ -1,29 +1,44 @@
 # quicksort
 快速排序
 
-/*
- * 冒泡排序
- */
-public class BubbleSort {
-　　public static void main(String[] args) {
-　　　　int[] arr={6,3,8,2,9,1};
-　　　　System.out.println("排序前数组为：");
-　　　　for(int num:arr){
-　　　　　　System.out.print(num+" ");
-　　　　}
-　　　　for(int i=0;i<arr.length-1;i++){//外层循环控制排序趟数
-　　　　　　for(int j=0;j<arr.length-1-i;j++){//内层循环控制每一趟排序多少次
-　　　　　　　　if(arr[j]>arr[j+1]){
-　　　　　　　　　　int temp=arr[j];
-　　　　　　　　　　arr[j]=arr[j+1];
-　　　　　　　　　　arr[j+1]=temp;
-　　　　　　　　}
-　　　　　　}
-　　　　} 
-　　　　System.out.println();
-　　　　System.out.println("排序后的数组为：");
- 　　　　for(int num:arr){
- 　　　　　　System.out.print(num+" ");
- 　　　　} 
-　　}
- }
+public static int partition(int []array,int lo,int hi){
+        //三数取中
+        int mid=lo+(hi-lo)/2;
+        if(array[mid]>array[hi]){
+            swap(array[mid],array[hi]);
+        }
+        if(array[lo]>array[hi]){
+            swap(array[lo],array[hi]);
+        }
+        if(array[mid]>array[lo]){
+            swap(array[mid],array[lo]);
+        }
+        int key=array[lo];
+        
+        while(lo<hi){
+            while(array[hi]>=key&&hi>lo){
+                hi--;
+            }
+            array[lo]=array[hi];
+            while(array[lo]<=key&&hi>lo){
+                lo++;
+            }
+            array[hi]=array[lo];
+        }
+        array[hi]=key;
+        return hi;
+    }
+    
+    public static void swap(int a,int b){
+        int temp=a;
+        a=b;
+        b=temp;
+    }
+    public static void sort(int[] array,int lo ,int hi){
+        if(lo>=hi){
+            return ;
+        }
+        int index=partition(array,lo,hi);
+        sort(array,lo,index-1);
+        sort(array,index+1,hi);
+    }
